@@ -1,8 +1,7 @@
-/* Render + interactividad desde PLAN_MALLA (plan.js):
-   - Pinta ciclos y materias en grillas uniformes
-   - Habilitada (rosa fuerte) cuando cumple TODOS los requisitos (AND)
+/* Render + interactividad desde PLAN_MALLA:
+   - Materias en columna, alto uniforme
+   - Habilita (rosa fuerte) si cumple TODOS los requisitos
    - Clic = aprobar (lila) / clic otra vez = revertir
-   - Recalcula dependencias al vuelo (no bloquea por ciclo)
 */
 
 function getRequisitos(id) {
@@ -33,13 +32,13 @@ function recalcEstados() {
     m.dataset.unlocked = isUnlocked ? 'true' : 'false';
     m.classList.remove('habilitada','bloqueada','recien');
 
-    if (m.classList.contains('aprobada')) return; // queda lila aunque cambien reqs
+    if (m.classList.contains('aprobada')) return;
 
     if (isUnlocked) {
       m.classList.add('habilitada');
       if (!wasUnlocked) {
         m.classList.add('recien');
-        setTimeout(() => m.classList.remove('recien'), 1600);
+        setTimeout(() => m.classList.remove('recien'), 1400);
       }
     } else {
       m.classList.add('bloqueada');
@@ -49,12 +48,11 @@ function recalcEstados() {
 
 function onMateriaClick(e) {
   const m = e.currentTarget;
-  // Solo permitir si está habilitada o ya aprobada
+  // Solo si está habilitada o ya aprobada
   if (!(m.classList.contains('habilitada') || m.classList.contains('aprobada'))) return;
 
   m.classList.toggle('aprobada');
   if (!m.classList.contains('aprobada')) m.classList.remove('recien');
-
   recalcEstados();
 }
 
@@ -69,7 +67,7 @@ function render() {
     porCiclo[nodo.ciclo].push({ id, ...nodo });
   });
 
-  // Pintar ciclos ordenados
+  // Pintar ciclos
   const ciclos = Object.keys(porCiclo).map(n => +n).sort((a,b)=>a-b);
   ciclos.forEach(cicloNum => {
     const sem = document.createElement('div');
@@ -89,11 +87,15 @@ function render() {
         const d = document.createElement('div');
         d.className = 'materia';
         d.id = m.id;
-        d.textContent = m.nombre;
-        d.title = m.requisitos.length
-          ? `Requisitos: ${m.requisitos.join(', ')}`
-          : 'Sin requisitos';
+
+        const label = document.createElement('span');
+        label.className = 'label';
+        label.textContent = m.nombre;
+
+        d.appendChild(label);
+        d.title = m.requisitos.length ? `Requisitos: ${m.requisitos.join(', ')}` : 'Sin requisitos';
         d.addEventListener('click', onMateriaClick);
+
         grid.appendChild(d);
       });
 
@@ -109,16 +111,4 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   render();
   recalcEstados();
-
-  // Chequeos suaves para ayudarte a detectar desalineaciones
-  document.querySelectorAll('.materia').forEach(m => {
-    if (!window.PLAN_MALLA[m.id]) {
-      console.warn(`ID "${m.id}" existe en HTML pero no en PLAN_MALLA.`);
-    }
-  });
-  Object.keys(window.PLAN_MALLA).forEach(id => {
-    if (!document.getElementById(id)) {
-      console.warn(`PLAN_MALLA incluye "${id}" pero no hay .materia con ese id renderizada.`);
-    }
-  });
 });
