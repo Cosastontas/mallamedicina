@@ -48,7 +48,7 @@ window.PLAN_MALLA = {
   "epidemiologia-i":            { nombre: "EPIDEMIOLOGÍA I", ciclo: 5, requisitos: ["bioestadistica-i","medicina-preventiva"] },
   "farmacologia-ii":            { nombre: "FARMACOLOGÍA II", ciclo: 5, requisitos: ["farmacologia-i"] },
   "fisiopatologia-ii":          { nombre: "FISIOPATOLOGÍA II", ciclo: 5, requisitos: ["fisiopatologia-i"] },
-  "parasitologia-micologia":    { nombre: "PARASITOLOGIA Y MICOLOGIA", ciclo: 5, requisitos: ["microbiologia","psicopatologia"] },
+  "parasitologia-micologia":    { nombre: "PARASITOLOGIA Y MICOLOGIA", ciclo: 5, requisitos: ["microbiologia","farmacologia-i","semiologia-i","patologia-i"] },
   "patologia-ii":               { nombre: "PATOLOGÍA II", ciclo: 5, requisitos: ["patologia-i","fisiopatologia-i"] },
   "psicopatologia":             { nombre: "PSICOPATOLOGIA", ciclo: 5, requisitos: ["psiconeurologia"] },
   "semiologia-ii":              { nombre: "SEMIOLOGÍA II", ciclo: 5, requisitos: ["patologia-i","fisiopatologia-i","farmacologia-i","semiologia-i"] },
