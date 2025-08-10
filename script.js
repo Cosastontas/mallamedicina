@@ -1,24 +1,29 @@
-/* Render + interactividad desde PLAN_MALLA:
+/* Interactividad desde window.PLAN_MALLA (plan.js):
    - Materias en columna, alto uniforme
    - Habilita (rosa fuerte) si cumple TODOS los requisitos
    - Clic = aprobar (lila) / clic otra vez = revertir
+   - No bloquea por ciclo: basta con cumplir requisitos, aunque otros ramos del ciclo previo falten
 */
+
+// Utilidad: obtener requisitos de una materia
 function getRequisitos(id) {
   const nodo = window.PLAN_MALLA?.[id];
   return Array.isArray(nodo?.requisitos) ? nodo.requisitos : [];
 }
 
+// Chequear si un requisito se cumple dadas las aprobadas
 function requisitoCumplido(req, aprobadasSet) {
   // Requisito por id exacto
-  const exact = document.getElementById(req);
-  if (exact) return aprobadasSet.has(req);
-
-  // Requisito agrupado por prefijo (req-*)
+  if (window.PLAN_MALLA?.[req]) {
+    return aprobadasSet.has(req);
+  }
+  // Requisito por grupo (prefijo), ej: "clinica-ii-*"
   const grupo = [...document.querySelectorAll(`.materia[id^="${req}-"]`)];
   if (grupo.length === 0) return false;
   return grupo.every(m => aprobadasSet.has(m.id));
 }
 
+// Recalcular y pintar estados (bloqueada/habilitada) según requisitos
 function recalcEstados() {
   const materias = [...document.querySelectorAll('.materia')];
   const aprobadas = new Set(materias.filter(m => m.classList.contains('aprobada')).map(m => m.id));
@@ -29,8 +34,9 @@ function recalcEstados() {
     const isUnlocked = reqs.every(r => requisitoCumplido(r, aprobadas));
 
     m.dataset.unlocked = isUnlocked ? 'true' : 'false';
-    m.classList.remove('habilitada','bloqueada','recien');
+    m.classList.remove('habilitada', 'bloqueada', 'recien');
 
+    // Si ya está aprobada, se mantiene lila
     if (m.classList.contains('aprobada')) return;
 
     if (isUnlocked) {
@@ -45,9 +51,9 @@ function recalcEstados() {
   });
 }
 
+// Click: aprobar / revertir (solo si habilitada o ya aprobada)
 function onMateriaClick(e) {
   const m = e.currentTarget;
-  // Solo si está habilitada o ya aprobada
   if (!(m.classList.contains('habilitada') || m.classList.contains('aprobada'))) return;
 
   m.classList.toggle('aprobada');
@@ -55,20 +61,25 @@ function onMateriaClick(e) {
   recalcEstados();
 }
 
+// Render de columnas por ciclo
 function render() {
   const app = document.getElementById('app');
   app.innerHTML = '';
 
-  // Agrupar por ciclo
+  if (!window.PLAN_MALLA) {
+    app.textContent = 'No se encontró PLAN_MALLA. Verifica plan.js';
+    return;
+  }
+
+  // Agrupar materias por ciclo
   const porCiclo = {};
   Object.entries(window.PLAN_MALLA).forEach(([id, nodo]) => {
     porCiclo[nodo.ciclo] = porCiclo[nodo.ciclo] || [];
     porCiclo[nodo.ciclo].push({ id, ...nodo });
   });
 
-  // Pintar ciclos
-  const ciclos = Object.keys(porCiclo).map(n => +n).sort((a,b)=>a-b);
-  ciclos.forEach(cicloNum => {
+  // Pintar ciclos ordenados
+  Object.keys(porCiclo).map(n => +n).sort((a,b)=>a-b).forEach(cicloNum => {
     const sem = document.createElement('div');
     sem.className = 'semestre';
     sem.dataset.ciclo = cicloNum;
@@ -103,11 +114,8 @@ function render() {
   });
 }
 
+// Inicializar
 document.addEventListener('DOMContentLoaded', () => {
-  if (!window.PLAN_MALLA) {
-    console.error('PLAN_MALLA no está definido (revisa plan.js)');
-    return;
-  }
   render();
-  recalcEstados();
+  recalcEstados(); // ← aquí se habilitan automáticamente las de 1er ciclo (sin requisitos)
 });
