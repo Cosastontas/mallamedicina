@@ -1,81 +1,116 @@
 /* ===== Base visual ===== */
 * { box-sizing: border-box; }
+html, body { height: 100%; }
 body {
-  font-family: Butler, sans-serif;
-  background-color: #fce4ec; /* fondo rosa suave */
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #fce4ec; /* rosa muy suave */
   margin: 0; padding: 0; text-align: center; color: #44263a;
 }
-h1 { color: #d81b60; font-size: 1.0rem; margin: 18px 0 8px; }
-.container { margin: 14px 16px 28px; }
-
-/* Panel por ciclo (estético) */
-.semestre {
-  display: inline-block;
-  width: 23%;
-  min-width: 260px;
-  margin: 10px;
-  background-color: #f8bbd0; /* panel rosa pastel */
-  padding: 18px;
-  border-radius: 12px;
-  vertical-align: top;
-  min-height: 360px;
-  box-shadow: 0 2px 10px rgba(0,0,0,.04);
-  transition: transform .15s ease;
+h1 {
+  color: #d81b60;
+  font-size: clamp(1.6rem, 2.5vw, 2.4rem);
+  margin: 18px 0 10px;
+  letter-spacing: .2px;
 }
-.semestre:hover { transform: translateY(-1px); }
 
-.semestre h2 {
+/* Contenedor de paneles (ciclos) */
+.container{
+  width: 100%;
+  padding: 14px 16px 28px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 18px;
+}
+
+/* Panel de cada ciclo */
+.semestre{
+  background: #f8bbd0;          /* rosa pastel */
+  border-radius: 16px;
+  padding: 16px;
+  text-align: left;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+}
+.semestre h2{
   color: #c2185b;
   margin: 0 0 12px;
-  font-size: 1.0rem;
+  font-size: 1.1rem;
+  font-weight: 700;
 }
 
-/* ===== Materias ===== */
-.materia {
-  display: block;
-  padding: 14px 12px;
-  margin: 10px 0;
-  border-radius: 10px;
-  background-color: #f8bbd0;       /* pastel base */
-  color: #880e4f;
-  text-align: center;
-  font-size: .98rem;
-  user-select: none;
-  transition: background-color .2s, box-shadow .2s, transform .15s, color .2s, opacity .2s, filter .2s;
-  box-shadow: 0 1px 0 rgba(0,0,0,.03);
+/* Materias en COLUMNA (una por fila) */
+.sem-grid{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-/* Bloqueada: aún no cumple TODOS los requisitos */
-.materia.bloqueada {
-  background-color: #f8bbd0;
-  color: #7a385c;
+/* ===== Tarjetas de materias =====
+   - Mismo ALTO para todas
+   - Texto legible (hasta 2 líneas con elipsis)
+*/
+.materia{
+  width: 100%;
+  height: 64px;                 /* ← ajusta aquí el alto uniforme (56–72px) */
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 14px;
+  background: #f3c0d4;          /* base (bloqueada) */
+  color: #6f2a4d;
+  box-shadow: 0 1px 0 rgba(0,0,0,.04);
+  transition: background-color .2s, box-shadow .2s, transform .15s, color .2s, opacity .2s;
+}
+
+/* El texto va en un span interno para poder truncar bonito */
+.materia .label{
+  font-size: 0.96rem;           /* tamaño moderado */
+  font-weight: 700;
+  letter-spacing: .15px;
+  text-transform: none;         /* evita mayúsculas forzadas */
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;        /* max 2 líneas */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Estados */
+.materia.bloqueada{
+  background: #f3c0d4;
+  color: #8a4d6b;
   opacity: .95;
   cursor: not-allowed;
-  filter: grayscale(.06);
 }
-
-/* Habilitada: ya cumple TODOS los requisitos (rosa fuerte) */
-.materia.habilitada {
-  background-color: #ff5aa5;
+.materia.habilitada{
+  background: #ff5aa5;          /* rosa fuerte */
   color: #fff;
   cursor: pointer;
   box-shadow: 0 6px 16px rgba(255,90,165,.25);
 }
-.materia.habilitada:hover { transform: translateY(-1px); }
+.materia.habilitada .label{ color:#fff; }
+.materia.habilitada:hover{ transform: translateY(-1px); }
 
-/* Aprobada: lila + tachado; clic de nuevo = revertir */
-.materia.aprobada {
-  background-color: #8e76ff; /* lila */
+.materia.aprobada{
+  background: #8e76ff;          /* lila */
   color: #fff;
   text-decoration: line-through;
   box-shadow: 0 0 0 2px rgba(142,118,255,.25);
   cursor: pointer;
 }
+.materia.aprobada .label{ color:#fff; }
 
-/* Efecto “recién habilitada” */
-.materia.recien { animation: pulseUnlock 1.2s ease-in-out 2; }
-@keyframes pulseUnlock {
-  0%   { transform: scale(1);   box-shadow: 0 0 0 0 rgba(255,90,165,.40); }
-  50%  { transform: scale(1.03); box-shadow: 0 0 0 12px rgba(255,90,165,0); }
-  100% { transform: scale(1);   box-shadow: 0 0 0 0 rgba(255,90,165,0); }
+/* Pulso al habilitar */
+.materia.recien{ animation: pulseUnlock 1.1s ease-in-out 2; }
+@keyframes pulseUnlock{
+  0%{   transform:scale(1);   box-shadow:0 0 0 0 rgba(255,90,165,.40); }
+  50%{  transform:scale(1.03); box-shadow:0 0 0 12px rgba(255,90,165,0); }
+  100%{ transform:scale(1);   box-shadow:0 0 0 0 rgba(255,90,165,0); }
+}
+
+/* Ajuste móvil */
+@media (max-width: 390px){
+  .container{ grid-template-columns: 1fr; }
 }
