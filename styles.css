@@ -5,7 +5,7 @@ body {
   background-color: #fce4ec; /* fondo rosa suave */
   margin: 0; padding: 0; text-align: center; color: #44263a;
 }
-h1 { color: #d81b60; font-size: 1.5rem; margin: 18px 0 8px; }
+h1 { color: #d81b60; font-size: 1.0rem; margin: 18px 0 8px; }
 .container { margin: 14px 16px 28px; }
 
 /* Panel por ciclo (estético) */
@@ -27,7 +27,7 @@ h1 { color: #d81b60; font-size: 1.5rem; margin: 18px 0 8px; }
 .semestre h2 {
   color: #c2185b;
   margin: 0 0 12px;
-  font-size: 1.12rem;
+  font-size: 1.0rem;
 }
 
 /* ===== Materias ===== */
