@@ -1,89 +1,95 @@
-/* === Estilo general === */
+/* ===== Base ===== */
+* { box-sizing: border-box; }
 body {
   font-family: Arial, sans-serif;
-  background-color: #ffe4ec;
-  margin: 0;
-  padding: 0;
-  text-align: center;
+  background-color: #fce4ec;  /* rosa muy suave */
+  margin: 0; padding: 0; text-align: center; color: #44263a;
 }
+h1 { color: #d81b60; font-size: 2.2rem; margin: 18px 0 10px; }
 
-/* Contenedor principal */
-.contenedor {
+/* Contenedor de paneles (ciclos) */
+.container{
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px;
-  padding: 20px;
+  gap: 18px;
+  padding: 14px 16px 28px;
 }
 
-/* Cada ciclo (semestre) */
-.semestre {
-  background-color: #ffb6c1;
-  padding: 20px;
-  border-radius: 12px;
-  width: 340px;
-  display: inline-block;
-  vertical-align: top;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+/* Panel de cada ciclo (columna) */
+.semestre{
+  width: 360px;                 /* mismo LARGO para todos los paneles */
+  background: #f8bbd0;          /* rosa pastel */
+  border-radius: 16px;
+  padding: 16px;
+  text-align: left;
+  box-shadow: 0 2px 10px rgba(0,0,0,.05);
 }
-
-/* Título del ciclo */
-.semestre h2 {
+.semestre h2{
   color: #c2185b;
-  margin-bottom: 15px;
+  margin: 0 0 12px;
+  font-size: 1.14rem;
 }
 
-/* Contenedor de materias en columna */
-.sem-grid {
+/* Materias EN COLUMNA y todas del MISMO ALTO */
+.sem-grid{
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  flex-direction: column;       /* vertical, una debajo de otra */
+  gap: 12px;
 }
 
-/* Tarjeta de materia con altura fija */
-.materia {
-  display: flex;
-  align-items: center;       /* centra vertical */
-  justify-content: center;   /* centra horizontal */
-  background-color: #ff80ab;
+.materia{
+  width: 100%;                  /* ocupa todo el ancho del panel */
+  height: 56px;                 /* 👈 MISMO ALTO para todas */
+  border-radius: 14px;
+  display: flex;                /* centra contenido */
+  align-items: center;
+  justify-content: center;
+  padding: 0 14px;
+  background: #f8bbd0;         /* base rosa pastel */
   color: #880e4f;
-  padding: 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: 100%;
-  height: 70px;              /* 👈 altura fija para todas */
+  font-weight: 600;
   text-align: center;
-  overflow-wrap: anywhere;
+  white-space: nowrap;          /* una línea */
+  overflow: hidden;             /* oculta exceso */
+  text-overflow: ellipsis;      /* … si se pasa */
+  box-shadow: 0 1px 0 rgba(0,0,0,.04);
+  transition: background-color .2s, transform .15s, box-shadow .2s, color .2s, opacity .2s;
 }
+.materia:hover{ transform: translateY(-1px); }
 
-/* Hover */
-.materia:hover {
-  transform: scale(1.02);
-}
-
-/* Aprobada */
-.aprobada {
-  background-color: #ce93d8 !important;
-  color: white;
-  text-decoration: line-through;
-}
-
-/* Desbloqueada */
-.desbloqueada {
-  background-color: #f48fb1 !important;
-  color: white;
-}
-
-/* Bloqueada */
-.bloqueada {
-  background-color: #f8bbd0;
-  color: #ad1457;
+/* Estados */
+.materia.bloqueada{
+  background: #f3c0d4;         /* rosa más pálido */
+  color: #9b4d6b;
+  opacity: .9;
   cursor: not-allowed;
-  opacity: 0.6;
+}
+.materia.habilitada{
+  background: #ff5aa5;         /* rosa fuerte: habilitada */
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(255,90,165,.25);
+}
+.materia.aprobada{
+  background: #8e76ff;         /* lila: aprobada */
+  color: #fff;
+  text-decoration: line-through;
+  box-shadow: 0 0 0 2px rgba(142,118,255,.25);
+  cursor: pointer;
 }
 
-/* Transiciones suaves */
-.materia, .aprobada, .desbloqueada, .bloqueada {
-  transition: background-color 0.3s ease, transform 0.2s ease;
+/* Efecto al “recién habilitarse” (pulso suave) */
+.materia.recien{
+  animation: pulseUnlock 1.2s ease-in-out 2;
+}
+@keyframes pulseUnlock{
+  0%   { transform: scale(1);   box-shadow: 0 0 0 0 rgba(255,90,165,.40); }
+  50%  { transform: scale(1.03); box-shadow: 0 0 0 12px rgba(255,90,165,0); }
+  100% { transform: scale(1);   box-shadow: 0 0 0 0 rgba(255,90,165,0); }
+}
+
+/* Pequeño ajuste responsivo */
+@media (max-width: 390px){
+  .semestre{ width: 92%; margin: 0 auto; }
 }
