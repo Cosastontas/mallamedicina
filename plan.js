@@ -63,6 +63,7 @@ window.PLAN_MALLA = {
   "etica-medica":               { nombre: "ETICA MEDICA", ciclo: 6, requisitos: ["culturas-contemporaneas"] },
   "historia-medicina":          { nombre: "HISTORIA DE LA MEDICINA", ciclo: 6, requisitos: ["culturas-contemporaneas"] },
   "medicina-tropical":          { nombre: "MEDICINA TROPICAL", ciclo: 6, requisitos: ["parasitologia-micologia","microbiologia","patologia-ii","fisiopatologia-ii","farmacologia-ii","semiologia-ii"] },
+  // ✅ Corregido: Pediatría I abre con estas cuatro de 5º
   "pediatria-i":                { nombre: "PEDIATRÍA I", ciclo: 6, requisitos: ["patologia-ii","fisiopatologia-ii","farmacologia-ii","semiologia-ii"] },
 
   // ========= VII CICLO =========
@@ -75,6 +76,7 @@ window.PLAN_MALLA = {
   "genetica-clinica":           { nombre: "GENETICA CLINICA", ciclo: 7, requisitos: ["pediatria-i"] },
   "ginecologia":                { nombre: "GINECOLOGÍA", ciclo: 7, requisitos: ["clinica-i"] },
   "informatica-medica":         { nombre: "INFORMATICA MEDICA", ciclo: 7, requisitos: ["clinica-i"] },
+  // ✅ Corregido: Obstetricia con Clínica I + Pediatría I
   "obstetricia":                { nombre: "OBSTETRICIA", ciclo: 7, requisitos: ["clinica-i","pediatria-i"] },
 
   // ========= VIII CICLO =========
@@ -86,6 +88,7 @@ window.PLAN_MALLA = {
   "diagnostico-imagenes-i":     { nombre: "DIAGNOSTICO POR IMAGENES I", ciclo: 8, requisitos: ["epidemiologia-i"] },
   "epidemiologia-ii":           { nombre: "EPIDEMIOLOGÍA II", ciclo: 8, requisitos: ["epidemiologia-i","bioestadistica-ii"] },
   "metodologia-investigacion-ii":{ nombre: "METODOLOGIA DE LA INVESTIGACION II", ciclo: 8, requisitos: ["metodologia-investigacion-i","informatica-medica"] },
+  // ✅ Corregido: Pediatría II con Pediatría I + Genética Clínica
   "pediatria-ii":               { nombre: "PEDIATRIA II", ciclo: 8, requisitos: ["pediatria-i","genetica-clinica"] },
 
   // ========= IX CICLO =========
@@ -101,6 +104,7 @@ window.PLAN_MALLA = {
   "clinica-quirurgica-i":       { nombre: "CLÍNICA QUIRÚRGICA I", ciclo: 9, requisitos: ["clinica-iii"] },
   "diagnostico-imagenes-ii":    { nombre: "DIAGNOSTICO POR IMAGENES II", ciclo: 9, requisitos: ["diagnostico-imagenes-i"] },
   "psiquiatria":                { nombre: "PSIQUIATRIA", ciclo: 9, requisitos: ["psicopatologia"] },
+  // ✅ Corregido: Técnicas Quirúrgicas con Clínica III
   "tecnicas-quirurgicas":       { nombre: "TÉCNICAS QUIRÚRGICAS", ciclo: 9, requisitos: ["clinica-iii"] },
 
   // ========= X CICLO =========
