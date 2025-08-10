@@ -21,7 +21,7 @@ body {
   background-color: #ffb6c1;
   padding: 20px;
   border-radius: 12px;
-  width: 340px; /* mismo ancho para todos */
+  width: 340px;
   display: inline-block;
   vertical-align: top;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -36,23 +36,23 @@ body {
 /* Contenedor de materias en columna */
 .sem-grid {
   display: flex;
-  flex-direction: column; /* vertical */
+  flex-direction: column;
   gap: 10px;
 }
 
-/* Tarjeta de materia */
+/* Tarjeta de materia con altura fija */
 .materia {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: center;       /* centra vertical */
+  justify-content: center;   /* centra horizontal */
   background-color: #ff80ab;
   color: #880e4f;
   padding: 10px;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
-  width: 100%; /* ocupa todo el ancho del ciclo */
-  min-height: 50px; /* altura mínima uniforme */
+  width: 100%;
+  height: 70px;              /* 👈 altura fija para todas */
   text-align: center;
   overflow-wrap: anywhere;
 }
@@ -62,14 +62,14 @@ body {
   transform: scale(1.02);
 }
 
-/* Aprobada (tachada y lila) */
+/* Aprobada */
 .aprobada {
   background-color: #ce93d8 !important;
   color: white;
   text-decoration: line-through;
 }
 
-/* Desbloqueada pero no aprobada (rosa más fuerte) */
+/* Desbloqueada */
 .desbloqueada {
   background-color: #f48fb1 !important;
   color: white;
