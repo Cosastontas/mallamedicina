@@ -3,7 +3,6 @@
    - Habilita (rosa fuerte) si cumple TODOS los requisitos
    - Clic = aprobar (lila) / clic otra vez = revertir
 */
-
 function getRequisitos(id) {
   const nodo = window.PLAN_MALLA?.[id];
   return Array.isArray(nodo?.requisitos) ? nodo.requisitos : [];
