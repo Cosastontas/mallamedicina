@@ -1,6 +1,6 @@
 // plan.js
 // IDs en minúsculas, sin tildes ni espacios; usa guiones.
-// "requisitos": array de IDs -> AND lógico (deben cumplirse TODOS).
+// "requisitos": array de IDs → AND lógico (deben cumplirse TODOS).
 
 window.PLAN_MALLA = {
   // ========= I CICLO =========
@@ -48,7 +48,8 @@ window.PLAN_MALLA = {
   "epidemiologia-i":            { nombre: "EPIDEMIOLOGÍA I", ciclo: 5, requisitos: ["bioestadistica-i","medicina-preventiva"] },
   "farmacologia-ii":            { nombre: "FARMACOLOGÍA II", ciclo: 5, requisitos: ["farmacologia-i"] },
   "fisiopatologia-ii":          { nombre: "FISIOPATOLOGÍA II", ciclo: 5, requisitos: ["fisiopatologia-i"] },
-  "parasitologia-micologia":    { nombre: "PARASITOLOGIA Y MICOLOGIA", ciclo: 5, requisitos: ["microbiologia","farmacologia-i","semiologia-i","patologia-i"] },
+  // ✅ Corregido según tu instrucción
+  "parasitologia-micologia":    { nombre: "PARASITOLOGIA Y MICOLOGIA", ciclo: 5, requisitos: ["semiologia-ii","patologia-ii","fisiopatologia-ii","microbiologia"] },
   "patologia-ii":               { nombre: "PATOLOGÍA II", ciclo: 5, requisitos: ["patologia-i","fisiopatologia-i"] },
   "psicopatologia":             { nombre: "PSICOPATOLOGIA", ciclo: 5, requisitos: ["psiconeurologia"] },
   "semiologia-ii":              { nombre: "SEMIOLOGÍA II", ciclo: 5, requisitos: ["patologia-i","fisiopatologia-i","farmacologia-i","semiologia-i"] },
@@ -62,7 +63,8 @@ window.PLAN_MALLA = {
   "etica-medica":               { nombre: "ETICA MEDICA", ciclo: 6, requisitos: ["culturas-contemporaneas"] },
   "historia-medicina":          { nombre: "HISTORIA DE LA MEDICINA", ciclo: 6, requisitos: ["culturas-contemporaneas"] },
   "medicina-tropical":          { nombre: "MEDICINA TROPICAL", ciclo: 6, requisitos: ["parasitologia-micologia","microbiologia","patologia-ii","fisiopatologia-ii","farmacologia-ii","semiologia-ii"] },
-  "pediatria-i":                { nombre: "PEDIATRÍA I", ciclo: 6, requisitos: ["clinica-i"] },
+  // ✅ Corregido: Pediatría I abre con estas cuatro de 5º
+  "pediatria-i":                { nombre: "PEDIATRÍA I", ciclo: 6, requisitos: ["patologia-ii","fisiopatologia-ii","farmacologia-ii","semiologia-ii"] },
 
   // ========= VII CICLO =========
   "antropologia-medica":        { nombre: "ANTROPOLOGIA MEDICA", ciclo: 7, requisitos: ["culturas-contemporaneas"] },
@@ -74,7 +76,8 @@ window.PLAN_MALLA = {
   "genetica-clinica":           { nombre: "GENETICA CLINICA", ciclo: 7, requisitos: ["pediatria-i"] },
   "ginecologia":                { nombre: "GINECOLOGÍA", ciclo: 7, requisitos: ["clinica-i"] },
   "informatica-medica":         { nombre: "INFORMATICA MEDICA", ciclo: 7, requisitos: ["clinica-i"] },
-  "obstetricia":                { nombre: "OBSTETRICIA", ciclo: 7, requisitos: ["pediatria-i","ginecologia","clinica-ii"] },
+  // ✅ Corregido: Obstetricia con Clínica I + Pediatría I
+  "obstetricia":                { nombre: "OBSTETRICIA", ciclo: 7, requisitos: ["clinica-i","pediatria-i"] },
 
   // ========= VIII CICLO =========
   "clinica-iii":                { nombre: "CLINICA III", ciclo: 8, requisitos: ["clinica-ii"] },
@@ -85,7 +88,8 @@ window.PLAN_MALLA = {
   "diagnostico-imagenes-i":     { nombre: "DIAGNOSTICO POR IMAGENES I", ciclo: 8, requisitos: ["epidemiologia-i"] },
   "epidemiologia-ii":           { nombre: "EPIDEMIOLOGÍA II", ciclo: 8, requisitos: ["epidemiologia-i","bioestadistica-ii"] },
   "metodologia-investigacion-ii":{ nombre: "METODOLOGIA DE LA INVESTIGACION II", ciclo: 8, requisitos: ["metodologia-investigacion-i","informatica-medica"] },
-  "pediatria-ii":               { nombre: "PEDIATRIA II", ciclo: 8, requisitos: ["pediatria-i","genetica-clinica","clinica-iii"] },
+  // ✅ Corregido: Pediatría II con Pediatría I + Genética Clínica
+  "pediatria-ii":               { nombre: "PEDIATRIA II", ciclo: 8, requisitos: ["pediatria-i","genetica-clinica"] },
 
   // ========= IX CICLO =========
   "clinica-iv":                 { nombre: "CLÍNICA IV", ciclo: 9, requisitos: ["clinica-iii"] },
@@ -94,13 +98,14 @@ window.PLAN_MALLA = {
   "clinica-iv-practica":        { nombre: "CLÍNICA IV: COMPONENTE PRÁCTICA", ciclo: 9, requisitos: ["clinica-iii"] },
   "clinica-iv-reumatologia":    { nombre: "CLÍNICA IV: COMPONENTE REUMATOLOGÍA", ciclo: 9, requisitos: ["clinica-iii"] },
   "clinica-quirurgica-i-otorrino-practica": { nombre: "CLÍNICA QUIRÚRGICA I: COMPONENTE OTORRINOLARINGOLOGIA PRÁCTICA", ciclo: 9, requisitos: ["clinica-iii"] },
-  "clinica-quirurgica-i-otorrino-teoria":   { nombre: "CLÍNICA QUIRÚRGICA I: COMPONENTE OTORRINOLARINGOLOGIA TEORÍA", ciclo: 9, requisitos: ["clinica-iii"] },
+  "clinica-quirurgica-i-otorrino-teoria":   { nombre: "CLÍNICA QUIRÚRGICA I: COMPONENTE OTORRINOLARINGOLOGIA TEORÍA", cycle: 9, requisitos: ["clinica-iii"] },
   "clinica-quirurgica-i-trauma-practica":   { nombre: "CLÍNICA QUIRÚRGICA I: COMPONENTE TRAUMATOLOGÍA PRÁCTICA", ciclo: 9, requisitos: ["clinica-iii"] },
   "clinica-quirurgica-i-trauma-teoria":     { nombre: "CLÍNICA QUIRÚRGICA I: COMPONENTE TRAUMATOLOGÍA TEORÍA", ciclo: 9, requisitos: ["clinica-iii"] },
   "clinica-quirurgica-i":       { nombre: "CLÍNICA QUIRÚRGICA I", ciclo: 9, requisitos: ["clinica-iii"] },
   "diagnostico-imagenes-ii":    { nombre: "DIAGNOSTICO POR IMAGENES II", ciclo: 9, requisitos: ["diagnostico-imagenes-i"] },
   "psiquiatria":                { nombre: "PSIQUIATRIA", ciclo: 9, requisitos: ["psicopatologia"] },
-  "tecnicas-quirurgicas":       { nombre: "TÉCNICAS QUIRÚRGICAS", ciclo: 9, requisitos: ["clinica-quirurgica-i"] },
+  // ✅ Corregido: Técnicas Quirúrgicas con Clínica III
+  "tecnicas-quirurgicas":       { nombre: "TÉCNICAS QUIRÚRGICAS", ciclo: 9, requisitos: ["clinica-iii"] },
 
   // ========= X CICLO =========
   "adm-servicios-salud":        { nombre: "ADMINISTRACIÓN DE SERVICIOS DE SALUD", ciclo: 10, requisitos: ["clinica-iii"] },
