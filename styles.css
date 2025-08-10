@@ -1,13 +1,22 @@
 /* ===== Base visual ===== */
 * { box-sizing: border-box; }
+html, body { height: 100%; }
 body {
   font-family: Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   background-color: #fce4ec; /* fondo rosa suave */
   margin: 0; padding: 0; text-align: center; color: #44263a;
 }
-h1 { color: #d81b60; font-size: 2.2rem; margin: 18px 0 8px; }
 
-/* Contenedor de ciclos: grid responsive de paneles */
+h1 {
+  color: #d81b60;
+  font-size: 2.2rem;
+  margin: 18px 0 8px;
+  letter-spacing: .3px;
+}
+
+/* Contenedor de ciclos: paneles responsivos */
 .container {
   width: 100%;
   padding: 14px 16px 28px;
@@ -20,64 +29,58 @@ h1 { color: #d81b60; font-size: 2.2rem; margin: 18px 0 8px; }
 .semestre {
   background-color: #f8bbd0; /* panel rosa pastel */
   border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0,0,0,.04);
+  box-shadow: 0 2px 10px rgba(0,0,0,.05);
   padding: 16px;
   text-align: left;
 }
+
 .semestre h2 {
   color: #c2185b;
   margin: 0 0 12px;
   font-size: 1.12rem;
+  font-weight: 700;
 }
 
-/* Grid interno de materias (uniforme) */
+/* === Materias EN COLUMNA (una por fila) === */
 .sem-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 columnas dentro del panel */
-  gap: 10px;
+  display: flex;           /* ← en columna */
+  flex-direction: column;
+  gap: 12px;
 }
 
-/* Ajuste responsivo: si el panel es estrecho, 1 columna; si es ancho, 3 */
-@media (max-width: 360px) {
-  .sem-grid { grid-template-columns: 1fr; }
-}
-@media (min-width: 900px) {
-  .sem-grid { grid-template-columns: repeat(3, 1fr); }
-}
-
-/* ===== Tarjetas de materias (todas mismo tamaño) ===== */
+/* ===== Tarjetas de materias (mismo ALTO) ===== */
 .materia {
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
 
-  /* Tamaño uniforme */
-  height: 88px;              /* alto fijo */
-  padding: 10px;
-  border-radius: 10px;
+  width: 100%;
+  height: 60px;            /* ← AJUSTA aquí el alto uniforme (56–68px) */
+  padding: 0 14px;
+  border-radius: 14px;
 
-  /* Estética base */
-  background-color: #f8bbd0; /* pastel base */
-  color: #880e4f;
-  font-size: .95rem;
+  background-color: #f3c0d4; /* pastel base */
+  color: #7a2950;            /* mejor contraste */
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: .2px;
   line-height: 1.2;
   user-select: none;
-  box-shadow: 0 1px 0 rgba(0,0,0,.03);
-  transition: background-color .2s, box-shadow .2s, transform .15s, color .2s, opacity .2s, filter .2s;
+  box-shadow: 0 1px 0 rgba(0,0,0,.04);
+  transition: background-color .2s, box-shadow .2s, transform .15s, color .2s, opacity .2s;
 
-  /* Manejo de texto largo */
+  /* Texto largo: permitir 2 líneas sin desbordar el alto */
+  white-space: normal;
   overflow: hidden;
-  word-break: break-word;
 }
 
 /* Estados */
 .materia.bloqueada {
-  background-color: #f8bbd0;
-  color: #7a385c;
+  background-color: #f3c0d4;
+  color: #9b4d6b;
   opacity: .95;
   cursor: not-allowed;
-  filter: grayscale(.06);
 }
 
 .materia.habilitada {
@@ -102,4 +105,9 @@ h1 { color: #d81b60; font-size: 2.2rem; margin: 18px 0 8px; }
   0%   { transform: scale(1);   box-shadow: 0 0 0 0 rgba(255,90,165,.40); }
   50%  { transform: scale(1.03); box-shadow: 0 0 0 12px rgba(255,90,165,0); }
   100% { transform: scale(1);   box-shadow: 0 0 0 0 rgba(255,90,165,0); }
+}
+
+/* Responsive pequeño: panel ocupa todo el ancho */
+@media (max-width: 390px) {
+  .container { grid-template-columns: 1fr; }
 }
