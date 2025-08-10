@@ -1,5 +1,5 @@
-/* Render + interactividad a partir de PLAN_MALLA:
-   - Pinta ciclos 1..10 y materias desde la base
+/* Render + interactividad desde PLAN_MALLA (plan.js):
+   - Pinta ciclos y materias en grillas uniformes
    - Habilitada (rosa fuerte) cuando cumple TODOS los requisitos (AND)
    - Clic = aprobar (lila) / clic otra vez = revertir
    - Recalcula dependencias al vuelo (no bloquea por ciclo)
@@ -69,7 +69,7 @@ function render() {
     porCiclo[nodo.ciclo].push({ id, ...nodo });
   });
 
-  // Pintar ciclos ordenados 1..10
+  // Pintar ciclos ordenados
   const ciclos = Object.keys(porCiclo).map(n => +n).sort((a,b)=>a-b);
   ciclos.forEach(cicloNum => {
     const sem = document.createElement('div');
@@ -80,21 +80,24 @@ function render() {
     h2.textContent = `${cicloNum}° Ciclo`;
     sem.appendChild(h2);
 
-    // Orden simple alfabético dentro del ciclo
+    const grid = document.createElement('div');
+    grid.className = 'sem-grid';
+
     porCiclo[cicloNum]
       .sort((a,b)=> a.nombre.localeCompare(b.nombre,'es',{sensitivity:'base'}))
       .forEach(m => {
         const d = document.createElement('div');
         d.className = 'materia';
-        d.id = m.id;                 // ID crítico para dependencias
-        d.textContent = m.nombre;    // Texto visible
+        d.id = m.id;
+        d.textContent = m.nombre;
         d.title = m.requisitos.length
           ? `Requisitos: ${m.requisitos.join(', ')}`
           : 'Sin requisitos';
         d.addEventListener('click', onMateriaClick);
-        sem.appendChild(d);
+        grid.appendChild(d);
       });
 
+    sem.appendChild(grid);
     app.appendChild(sem);
   });
 }
@@ -107,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
   render();
   recalcEstados();
 
-  // Chequeos suaves en consola (ayudan a detectar desalineaciones)
+  // Chequeos suaves para ayudarte a detectar desalineaciones
   document.querySelectorAll('.materia').forEach(m => {
     if (!window.PLAN_MALLA[m.id]) {
       console.warn(`ID "${m.id}" existe en HTML pero no en PLAN_MALLA.`);
