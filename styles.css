@@ -111,3 +111,37 @@ h1 {
 @media (max-width: 390px) {
   .container { grid-template-columns: 1fr; }
 }
+
+/* === FORZAR COLUMNA DENTRO DE CADA CICLO === */
+.sem-grid{
+  display: flex !important;     /* antes era grid */
+  flex-direction: column !important;
+  gap: 12px;
+}
+
+/* === TARJETAS: MISMO ALTO, TEXTO LEGIBLE === */
+.materia{
+  width: 100%;
+  height: 60px;                 /* ← mismo alto para todas (ajusta 56–68px) */
+  padding: 0 14px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  background: #f3c0d4;
+  color: #7a2950;
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: .2px;
+  white-space: normal;          /* permite 2 líneas */
+  overflow: hidden;
+  text-transform: none;         /* por si quedó en mayúsculas */
+}
+
+/* ESTADOS (se mantienen, pero sin cambiar el alto) */
+.materia.bloqueada{ background:#f3c0d4; color:#9b4d6b; cursor:not-allowed; opacity:.95; }
+.materia.habilitada{ background:#ff5aa5; color:#fff; cursor:pointer; box-shadow:0 6px 16px rgba(255,90,165,.25); }
+.materia.habilitada:hover{ transform: translateY(-1px); }
+.materia.aprobada{ background:#8e76ff; color:#fff; text-decoration: line-through; box-shadow:0 0 0 2px rgba(142,118,255,.25); cursor:pointer; }
