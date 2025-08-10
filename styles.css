@@ -13,12 +13,13 @@ h1 { color: #d81b60; font-size: 2.2rem; margin: 18px 0 10px; }
   flex-wrap: wrap;
   justify-content: center;
   gap: 18px;
-  padding: 14px 16px 28px;
+  padding: 20px 20px 28px;
 }
 
 /* Panel de cada ciclo (columna) */
 .semestre{
-  width: 360px;                 /* mismo LARGO para todos los paneles */
+  width: 200px; /* mismo LARGO para todos los paneles */
+  high: 500px
   background: #f8bbd0;          /* rosa pastel */
   border-radius: 16px;
   padding: 16px;
