@@ -62,14 +62,13 @@ h1 {
   color: #6f2a4d;
   box-shadow: 0 1px 0 rgba(0,0,0,.04);
   transition: background-color .2s, box-shadow .2s, transform .15s, color .2s, opacity .2s;
+  user-select: none;
 }
 
-/* El texto va en un span interno para poder truncar bonito */
 .materia .label{
   font-size: 0.96rem;           /* tamaño moderado */
   font-weight: 700;
   letter-spacing: .15px;
-  text-transform: none;         /* evita mayúsculas forzadas */
   line-height: 1.2;
   display: -webkit-box;
   -webkit-line-clamp: 2;        /* max 2 líneas */
@@ -77,7 +76,7 @@ h1 {
   overflow: hidden;
 }
 
-/* Estados */
+/* Estados visuales */
 .materia.bloqueada{
   background: #f3c0d4;
   color: #8a4d6b;
